@@ -32,11 +32,13 @@
                     android:text="Player One" />
                 <TextView
                     android:id="@+id/tv_score1"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
                     android:textAlignment="center"
                     android:supportsRtl="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12" />
+                     />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -58,7 +60,9 @@
                     android:supportsRtl="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12" />
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
