@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView scorep1, scorep2, result;
@@ -52,14 +53,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int gameStater = Integer.parseInt(buttonIDS.substring( buttonIDS.length()-1,buttonIDS.length()));
         if(activePlayer){
             ((Button)v).setText("x");
-            ((Button)v).setTextColor( Color.parseColor("#FFF3C4A"));
+            ((Button)v).setTextColor( Color.parseColor("#990000"));
             gameSate[gameStater] = 0;
         }else {
             ((Button)v).setText("0");
-            ((Button)v).setTextColor( Color.parseColor("#70FFAE"));
+            ((Button)v).setTextColor( Color.parseColor("#cc00cc"));
             gameSate[gameStater] = 1;
         }
         round_count++;
+        if(checkWhoWin()){
+            if(activePlayer){
+                p1_count++;
+                updatePlayerScore();
+                Toast.makeText( this,"player 1 won",Toast.LENGTH_SHORT).show();
+                playAgain();
+            }else {
+                p2_count++;
+                updatePlayerScore();
+                Toast.makeText( this,"player 2 won",Toast.LENGTH_SHORT).show();
+                playAgain();
+            }
+        }else if(round_count ==9 ){
+            playAgain();
+            Toast.makeText( this,"player 2 won",Toast.LENGTH_SHORT).show();
+
+        }else {
+            activePlayer = !activePlayer;
+        }
+        if(p1_count>p2_count){
+            result.setText("the winer is p1" );
+        }else if(p2_count>p1_count){
+            result.setText("the winer is p2" );
+        }else {
+            result.setText("");
+        }
+
+        resetGame.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playAgain();
+                p1_count = 0;
+                p2_count = 0;
+                result.setText("");
+                updatePlayerScore();
+            }
+        } );
     }
     public boolean checkWhoWin() {
         boolean whoWin = false;
@@ -74,5 +112,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void  updatePlayerScore() {
         scorep1.setText( Integer.toString( p1_count));
         scorep2.setText( Integer.toString( p2_count));
+    }
+    public void playAgain(){
+        round_count = 0;
+        activePlayer = true;
+        for(int i =0;i<buttons.length;i++){
+            gameSate[i] = 2;
+            buttons[i].setText("");
+        }
     }
 }
